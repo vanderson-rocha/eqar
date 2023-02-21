@@ -31,14 +31,7 @@ def load_rules(location, fold, class_index = list()):
         rules['rule'] = rules['rule'].apply(ast.literal_eval)
 
     return rules
-'''
-def rules_difference(list_a, list_b):
-    a = set(map(tuple, list_a))
-    b = set(map(tuple, list_b))
-    list_d = a - b
-    ordered = sorted(list(list_d), key = len)
-    return ordered
-'''
+
 def rules_intersection(list_a, list_b):
     a = set(map(tuple, list_a))
     b = set(map(tuple, list_b))
@@ -116,24 +109,6 @@ def rules_superset(rule_to_check, const_parameters):
     if is_superset:
         return rule_to_check
     return None
-'''
-def rules_superset(rule_to_check, const_parameters):
-    rules_list = const_parameters[0]
-    rules_list.sort(key=len)
-    if rule_to_check in rules_list:
-        rules_list.remove(rule_to_check)
-    args = const_parameters[1]
-    max_len = args.max_length
-    rule_len = len(rule_to_check)
-    if rule_len == 2:
-        return None
-    minors_rules = [r for r in rules_list if len(r) < rule_len and rule_to_check[0] <= r[0] and rule_to_check[-1] >= r[-1]]
-    minors_rules = [r for r in minors_rules if len(r) <= rule_len - 2] # Filter further by length
-    for r in minors_rules:
-        if all(c in rule_to_check for c in r):
-            return rule_to_check
-    return None
-'''
 
 def remove_rules_supersets(rules, class_distribution, args):
     logger = logging.getLogger('EQAR')

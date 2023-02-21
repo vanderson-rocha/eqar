@@ -262,7 +262,6 @@ if __name__=="__main__":
         print(e)
         exit(1)
 
-    #print(dataset.values.sum())
     filename = (args.dataset).split('/')[-1]
     filename = f'{args.feature_selection}_{filename}'
 
@@ -292,6 +291,5 @@ if __name__=="__main__":
                 selected_features.append(feature)
         dataset = dataset[selected_features]
 
-    #print(dataset.values.sum())
     print(dataset.shape)
     dataset.to_csv(filename, index = False)

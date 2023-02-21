@@ -51,7 +51,7 @@ if __name__=="__main__":
     biggest_mcc = 0.0
     count = 0
     mt = 0.1
-    for t in [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]: #0.1, 0.2, 0.3, 0.4,
+    for t in [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]:
         cmd = f'python3 run.py -d {args.dataset} -s {args.min_support} -q {args.qualify} -t {t}'# --verbose'
         print(f'Running {cmd}')
         os.system(cmd)

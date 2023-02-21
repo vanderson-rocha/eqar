@@ -212,8 +212,6 @@ def get_rules_quality_parameters(train, rules, runtimes, args, fold):
     train_fim = to_fim_format(train_list)
     start_time = timeit.default_timer()
     for class_id in class_distribution.index:
-        #if class_id == 0:
-            #continue
         r = rules[class_id]
         r.reset_index(drop = True, inplace = True)
         rules_list = list(r['rule'])
@@ -269,11 +267,7 @@ def get_best_rules(rules, args, fold, attribute = 'q_value'):
 
     update_log(DIR_TH, fold, 'best_rules')
     best_rules = pd.DataFrame()
-    '''
-    num_rules_per_class = [len(rules[c]) for c in class_distribution.index]
-    th = int(min(num_rules_per_class) * args.threshold)
-    th = th if th else 1
-    '''
+
     for c in class_distribution.index:
         r = rules[c]
         r = r.sort_values(by = [attribute], ascending = False)
@@ -403,14 +397,12 @@ def eqar(train, test, args, fold):
         #For Binary Classification
         default_class = 1 #check for multiclass
         prediction = [int(t[default_class] >= args.min_probability) for t in test_probabilistic_prediction_list]
-        #prediction = file_content(DIR_TH, fold, 'prediction')
         runtimes = load_runtimes(DIR_TH, fold)
 
     classification = list(test[args.class_column])
     logger.info(f'[Fold {fold}] Calculating Evaluation Metrics')
     eval_metrics = get_evaluation(rules, classification, prediction)
     update_log(DIR_TH, fold, 'finished')
-    #graph_features_convergence(DIR_TH, fold, rules, columns_list, args)
     all_malware_rules.append(rules[rules[args.class_column] == 1]['rule'])
     return eval_metrics, runtimes, prediction, prob_prediction
 
@@ -492,4 +484,3 @@ if __name__=="__main__":
     graph_features_convergence(DIR_TH, 0, all_malware_rules, columns_list, args)
     graph_roc_curve(DIR_TH, general_prob_prediction, general_class, g_eval)
     print(g_eval)
-    #print(sum_b / 5.0, sum_m / 5.0)
