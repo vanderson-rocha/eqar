@@ -341,8 +341,6 @@ def eqar(train, test, args, fold):
     global class_distribution
     global columns_list
     global all_malware_rules
-    global sum_b
-    global sum_m
 
     step = file_content(DIR_BASE, fold, 'log')
     stopped_step = step_dict.get(step, 0)
@@ -357,9 +355,6 @@ def eqar(train, test, args, fold):
 
     if stopped_step <= step_dict.get('filter_rules'):
         rules, runtimes = get_filtered_rules(rules, runtimes, args, fold)
-
-    sum_b += len(rules[0])
-    sum_m += len(rules[1])
 
     if stopped_step <= step_dict.get('quality_parameters'):
         rules, runtimes = get_rules_quality_parameters(train, rules, runtimes, args, fold)
@@ -412,11 +407,6 @@ if __name__=="__main__":
     global logger
     global class_distribution
     global all_malware_rules
-    global sum_b
-    global sum_m
-
-    sum_b = 0
-    sum_m = 0
 
     logger = logging.getLogger('EQAR')
     args = parse_args(sys.argv[1:])
